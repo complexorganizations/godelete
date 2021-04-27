@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"os/user"
+	"path/filepath"
 )
 
 var (
@@ -25,13 +26,13 @@ func main() {
 }
 
 func findAllGoApps() {
-	files, err := os.ReadDir(goUserBinPath)
-	if err != nil {
-		log.Fatal(err)
-	}
-	for _, file := range files {
-		fmt.Println(file.Name())
-	}
+	// Find all files in bin folder
+	filepath.Walk(goUserBinPath, func(path string, info os.FileInfo, err error) error {
+		if fileExists(path) {
+			fmt.Println(path)
+		}
+		return nil
+	})
 }
 
 // Check if a folder exists
