@@ -26,14 +26,15 @@ func init() {
 }
 
 func main() {
-	fmt.Print("Hello, playground")
+	findAllGoApps()
 }
 
 func findAllGoApps() {
 	// Find all files in bin folder
 	filepath.Walk(goUserBinPath, func(path string, info os.FileInfo, err error) error {
 		if fileExists(path) {
-			fmt.Println(path)
+			fileNameOnly := filepath.Base(path)
+			fmt.Println(fileNameOnly)
 		}
 		return nil
 	})
