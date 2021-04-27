@@ -2,10 +2,14 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"os/exec"
+	"os/user"
 )
 
 var (
-	goUserPath = fmt.Sprint(userDirectory() + "/go")
+	goUserPath    = fmt.Sprint(userDirectory() + "/go")
 	goUserBinPath = fmt.Sprint(goUserPath + "/bin")
 )
 
@@ -20,6 +24,15 @@ func main() {
 	fmt.Println("Hello, playground")
 }
 
+func findAllGoApps() {
+	files, err := os.ReadDir(goUserBinPath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	for _, file := range files {
+		fmt.Println(file.Name())
+	}
+}
 
 // Check if a folder exists
 func folderExists(foldername string) bool {
