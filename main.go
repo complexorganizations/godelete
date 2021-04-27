@@ -35,6 +35,7 @@ func findAllGoApps() {
 		if fileExists(path) {
 			fileNameOnly := filepath.Base(path)
 			fmt.Println(fileNameOnly)
+			// take user input and if the user input matches the name than remove it.
 		}
 		return nil
 	})
