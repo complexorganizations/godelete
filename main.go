@@ -12,6 +12,7 @@ import (
 var (
 	goUserPath    = fmt.Sprint(userDirectory() + "/go")
 	goUserBinPath = fmt.Sprint(goUserPath + "/bin")
+	goUserPkgPath = fmt.Sprint(goUserPath + "/pkg")
 )
 
 func init() {
@@ -19,10 +20,13 @@ func init() {
 	if !commandExists("go") {
 		log.Fatal("Error: The application go was not found in the system.")
 	}
+	if !folderExists(goUserPath) {
+		log.Fatal("Error: The go user folder was not found in the system.")
+	}
 }
 
 func main() {
-	fmt.Println("Hello, playground")
+	fmt.Print("Hello, playground")
 }
 
 func findAllGoApps() {
