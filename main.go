@@ -45,7 +45,7 @@ func findAllGoAppsBins() {
 
 func findAllGoAppsSource() {
 	filepath.Walk(goUserModPath, func(path string, info os.FileInfo, err error) error {
-		if folderExists(path) {
+		if fileExists(path)folderExists(path) {
 			fmt.Println(path)
 		}
 		return nil
@@ -53,7 +53,15 @@ func findAllGoAppsSource() {
 }
 
 func deleteBinAndSource(appname string) {
-	//
+	filepath.Walk(goUserBinPath, func(path string, info os.FileInfo, err error) error {
+		if fileExists(path) {
+			fileNameOnly := filepath.Base(path)
+			if appname == fileNameOnly {
+				os.Remove(path)
+			}
+		}
+		return nil
+	})
 }
 
 // Check if a folder exists
