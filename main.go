@@ -50,11 +50,18 @@ func takeUserInput() {
 	if appName == "exit" {
 		os.Exit(0)
 	}
+	if appName == "delete-all" {
+		deleteBinAndSource("delete-all")
+	}
 	deleteBinAndSource(appName)
 }
 
 func deleteBinAndSource(appname string) {
 	// Remove the bins
+	if appname == "delete-all" {
+		os.RemoveAll(goUserBinPath)
+		os.RemoveAll(goUserModPath)
+	}
 	filepath.Walk(goUserBinPath, func(path string, info os.FileInfo, err error) error {
 		if fileExists(path) {
 			fileNameOnly := filepath.Base(path)
