@@ -27,25 +27,22 @@ func init() {
 }
 
 func main() {
-	findAllGoAppsBins()
-	findAllGoAppsSource()
+	findAllGoApps()
 }
 
 // Find all files in bin folder
-func findAllGoAppsBins() {
+func findAllGoApps() {
+	// Bin
 	filepath.Walk(goUserBinPath, func(path string, info os.FileInfo, err error) error {
 		if fileExists(path) {
 			fileNameOnly := filepath.Base(path)
 			fmt.Println(fileNameOnly)
-			// take user input and if the user input matches the name than remove it.
 		}
 		return nil
 	})
-}
-
-func findAllGoAppsSource() {
+	// Source
 	filepath.Walk(goUserModPath, func(path string, info os.FileInfo, err error) error {
-		if fileExists(path)folderExists(path) {
+		if folderExists(path) {
 			fmt.Println(path)
 		}
 		return nil
