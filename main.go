@@ -13,6 +13,7 @@ var (
 	goUserPath    = fmt.Sprint(userDirectory() + "/go")
 	goUserBinPath = fmt.Sprint(goUserPath + "/bin")
 	goUserPkgPath = fmt.Sprint(goUserPath + "/pkg")
+	goUserModPath = fmt.Sprint(goUserPkgPath + "/mod")
 )
 
 func init() {
@@ -26,11 +27,12 @@ func init() {
 }
 
 func main() {
-	findAllGoApps()
+	findAllGoAppsBins()
+	findAllGoAppsSource()
 }
 
-func findAllGoApps() {
-	// Find all files in bin folder
+// Find all files in bin folder
+func findAllGoAppsBins() {
 	filepath.Walk(goUserBinPath, func(path string, info os.FileInfo, err error) error {
 		if fileExists(path) {
 			fileNameOnly := filepath.Base(path)
@@ -39,6 +41,19 @@ func findAllGoApps() {
 		}
 		return nil
 	})
+}
+
+func findAllGoAppsSource() {
+	filepath.Walk(goUserModPath, func(path string, info os.FileInfo, err error) error {
+		if folderExists(path) {
+			fmt.Println(path)
+		}
+		return nil
+	})
+}
+
+func deleteBinAndSource(appname string) {
+	//
 }
 
 // Check if a folder exists
