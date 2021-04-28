@@ -37,8 +37,7 @@ func findAllGoApps() {
 	// Bin
 	filepath.Walk(goUserBinPath, func(path string, info os.FileInfo, err error) error {
 		if fileExists(path) {
-			fileNameOnly := filepath.Base(path)
-			fmt.Println(fileNameOnly)
+			fmt.Println(filepath.Base(path), fileSize(path))
 		}
 		return nil
 	})
@@ -48,6 +47,9 @@ func takeUserInput() {
 	fmt.Println("Which package would you like to delete?")
 	var appName string
 	fmt.Scanln(&appName)
+	if appName == "exit" {
+		os.Exit(0)
+	}
 	deleteBinAndSource(appName)
 }
 
@@ -97,7 +99,7 @@ func commandExists(cmd string) bool {
 	if err != nil {
 		return false
 	}
-	_ = cmd // variable declared and not used
+	_ = cmd
 	return true
 }
 
@@ -108,4 +110,13 @@ func userDirectory() string {
 		log.Fatal(err)
 	}
 	return user.HomeDir
+}
+
+// Get the size of a file
+func fileSize(filepath string) int64 {
+	file, err := os.Stat(filepath)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return file.Size()
 }
