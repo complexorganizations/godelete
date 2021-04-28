@@ -7,6 +7,7 @@ import (
 	"os/exec"
 	"os/user"
 	"path/filepath"
+	"strings"
 )
 
 var (
@@ -28,6 +29,7 @@ func init() {
 
 func main() {
 	findAllGoApps()
+	takeUserInput()
 }
 
 // Find all files in bin folder
@@ -40,21 +42,31 @@ func findAllGoApps() {
 		}
 		return nil
 	})
-	// Source
-	filepath.Walk(goUserModPath, func(path string, info os.FileInfo, err error) error {
-		if folderExists(path) {
-			fmt.Println(path)
-		}
-		return nil
-	})
+}
+
+func takeUserInput() {
+	fmt.Println("Which package would you like to delete?")
+	var appName string
+	fmt.Scanln(&appName)
+	//deleteBinAndSource(appName)
 }
 
 func deleteBinAndSource(appname string) {
+	// Remove the bins
 	filepath.Walk(goUserBinPath, func(path string, info os.FileInfo, err error) error {
 		if fileExists(path) {
 			fileNameOnly := filepath.Base(path)
 			if appname == fileNameOnly {
 				os.Remove(path)
+			}
+		}
+		return nil
+	})
+	// Remove the source
+	filepath.Walk(goUserModPath, func(path string, info os.FileInfo, err error) error {
+		if folderExists(path) {
+			if strings.Contains(path, appname) {
+				os.RemoveAll(path)
 			}
 		}
 		return nil
