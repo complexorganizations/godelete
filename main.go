@@ -48,7 +48,7 @@ func takeUserInput() {
 	fmt.Println("Which package would you like to delete?")
 	var appName string
 	fmt.Scanln(&appName)
-	//deleteBinAndSource(appName)
+	deleteBinAndSource(appName)
 }
 
 func deleteBinAndSource(appname string) {
