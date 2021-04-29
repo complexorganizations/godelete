@@ -32,9 +32,8 @@ func main() {
 	takeUserInput()
 }
 
-// Find all files in bin folder
 func findAllGoApps() {
-	// Bin
+	// Find all files in bin folder
 	filepath.Walk(goUserBinPath, func(path string, info os.FileInfo, err error) error {
 		if fileExists(path) {
 			fmt.Println(filepath.Base(path), fileSize(path))
@@ -44,6 +43,7 @@ func findAllGoApps() {
 }
 
 func takeUserInput() {
+	// Take user input
 	fmt.Println("Which package would you like to delete?")
 	var appName string
 	fmt.Scanln(&appName)
